@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:bookapp/widgets/bookitem.dart';
+import 'package:bookapp/screens/result.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -8,26 +9,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-Map<int, List> data = {
-  0 : [
-    'Email',
-    Icons.email
-  ],
-  1 : [
-    'Password',
-    Icons.lock
-  ],
-  2 : [
-    'Account',
-    Icons.person
-  ],
-  3 : [
-    'Setting',
-    Icons.settings
-  ]
-};
-
 
 
 Map<int, List> popularBookData = {
@@ -80,6 +61,7 @@ Map<int, List> bookData = {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(
           'My Book',
@@ -93,29 +75,16 @@ Map<int, List> bookData = {
         iconTheme: IconThemeData(color: Colors.black, size: 25.0),
         elevation: 0.0,
         actions: [
-          Icon(
-            Icons.search,
+          IconButton(
+            icon: Icon(
+              Icons.search,
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {return Result();}));
+              //Navigator.pushNamed(context, 'result');
+            },
           ),
         ],
-      ),
-      drawer: Drawer(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 30.0),
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: data.length,
-            itemBuilder: (context, index){
-              return ListTile(
-                leading: Icon(data[index][1], color: Colors.black, size: 25.0),
-                title: Text(
-                    data[index][0],
-                    style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.bold)
-                  ),
-                trailing: Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 20.0),
-              );
-            }
-          ),
-        ),
       ),
       body: Container(
         margin: EdgeInsets.all(10.0),
@@ -124,12 +93,12 @@ Map<int, List> bookData = {
           children: [
             title('Popular'),
             Container(
-              height: MediaQuery.of(context).size.height/2.4,
+              height: MediaQuery.of(context).size.height/2.1,
               child: scrollItem(popularBookData)
             ),
             title('Bestsellers'),
             Container(
-              height: MediaQuery.of(context).size.height/2.4,
+              height: MediaQuery.of(context).size.height/2.1,
               child: scrollItem(bookData),
             ),
           ],
@@ -148,38 +117,15 @@ Map<int, List> bookData = {
       scrollDirection: Axis.horizontal,
       itemCount: data.length,
       itemBuilder: (context, index){
-        return Container(
-          margin: EdgeInsets.all(15.0),
-          width: MediaQuery.of(context).size.width/2.7,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 190.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      data[index][2]
-                    ),
-                    fit: BoxFit.fill
-                  ),
-                ),
-              ),
-              ListTile(
-                title: Text(
-                  data[index][0],
-                  style: TextStyle(color: Colors.black, fontSize: 17.0, fontWeight: FontWeight.bold)
-                ),
-                subtitle: Text(
-                  '4.9 20 Reviews\n${data[index][1]}\$',
-                  style: TextStyle(color: Colors.grey, fontSize: 15.0, fontWeight: FontWeight.bold)
-                ),
-              ),
-            ],
-          ),
+        return BookItem(
+          image: data[index][2],
+          title: data[index][0],
+          price: data[index][1]
         );
       }
     );
   }
 }
+
+
+
