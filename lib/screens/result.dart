@@ -9,6 +9,8 @@ class Result extends StatefulWidget {
 
 class _ResultState extends State<Result> {
 
+String selectedChoice = '';  
+
 Map<int, List> data = {
   0 : [
     'Dark Night',
@@ -69,8 +71,33 @@ Map<int, List> data = {
         iconTheme: IconThemeData(color: Colors.black, size: 25.0),
         elevation: 0.0,
         actions: [
-          Icon(
-            Icons.tune,
+          PopupMenuButton(
+            icon: Icon(Icons.tune),
+            itemBuilder: (BuildContext context){
+              return <PopupMenuEntry<String>>[
+                PopupMenuItem(
+                  child: Text('Price Low To High'),
+                  value: 'Price Low To High'
+                ),
+                PopupMenuItem(
+                  child: Text('Price High To Low'),
+                  value: 'Price High To Low'
+                ),
+                PopupMenuItem(
+                  child: Text('Rate High To Low'),
+                  value: 'Rate High To Low'
+                ),
+                PopupMenuItem(
+                  child: Text('Rate Low To High'),
+                  value: 'Price Low To High'
+                ),
+              ];
+            },
+            onSelected: (value){
+              setState(() {
+                selectedChoice = value;
+              });
+            },
           ),
         ],
         leading: IconButton(

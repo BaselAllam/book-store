@@ -81,7 +81,6 @@ Map<int, List> bookData = {
             ),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {return Result();}));
-              //Navigator.pushNamed(context, 'result');
             },
           ),
         ],

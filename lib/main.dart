@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bookapp/screens/bottomnavbar/bottomnavbar.dart';
+import 'package:bookapp/screens/onboard.dart';
 
 
 void main() => runApp(MyApp());
@@ -9,11 +9,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: BottomNavBar(),
+      home: OnBoard(),
       debugShowCheckedModeBanner: false,
-      // routes: {
-      //   'result' : (context) => Result()
-      // },
     );
   }
 }
