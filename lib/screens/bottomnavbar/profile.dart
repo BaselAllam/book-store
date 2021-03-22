@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:bookapp/screens/addbook.dart';
 
 
 class Profile extends StatefulWidget {
@@ -30,15 +31,21 @@ class _ProfileState extends State<Profile> {
         child: ListView(
           scrollDirection: Axis.vertical,
           children: [
-            item('My Profile', Icons.account_circle),
-            item('Settings', Icons.settings),
-            item('Logout', Icons.exit_to_app)
+            item('My Profile', Icons.account_circle, () {}),
+            item('Add Book', Icons.add, () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {return AddBook();}));
+            }),
+            item('Settings', Icons.settings, () {}),
+            item('Logout', Icons.exit_to_app, () async {
+              SharedPreferences _user = await SharedPreferences.getInstance();
+              _user.clear();
+            })
           ],
         ),
       ),
     );
   }
-  item(String title, IconData icon) {
+  item(String title, IconData icon, Function onTap) {
     return ListTile(
       leading: Icon(icon, color: Colors.black, size: 20.0),
       title: Text(
@@ -46,6 +53,7 @@ class _ProfileState extends State<Profile> {
         style: TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.bold),
       ),
       trailing: Icon(Icons.navigate_next, color: Colors.grey, size: 20.0),
+      onTap: onTap
     );
   }
 }

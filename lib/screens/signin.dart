@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bookapp/widgets/socialitem.dart';
 import 'package:bookapp/screens/bottomnavbar/bottomnavbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -65,10 +66,12 @@ bool secured = true;
                       ),
                       color: Colors.black,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                      onPressed: () {
+                      onPressed: () async {
                         if(!_formKey.currentState.validate()){
                           Scaffold.of(context).showSnackBar(snack('Field Required!'));
                         }else{
+                          SharedPreferences _user = await SharedPreferences.getInstance();
+                          _user.setString('email', emailController.text);
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {return BottomNavBar();}));
                         }
                       },

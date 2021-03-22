@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bookapp/widgets/bookitem.dart';
 
 
+
 class Result extends StatefulWidget {
   @override
   _ResultState createState() => _ResultState();
@@ -9,7 +10,7 @@ class Result extends StatefulWidget {
 
 class _ResultState extends State<Result> {
 
-String selectedChoice = '';  
+String selectedChoice = '';
 
 Map<int, List> data = {
   0 : [
