@@ -70,8 +70,8 @@ bool secured = true;
                         if(!_formKey.currentState.validate()){
                           Scaffold.of(context).showSnackBar(snack('Field Required!'));
                         }else{
-                          SharedPreferences _user = await SharedPreferences.getInstance();
-                          _user.setString('email', emailController.text);
+                          // SharedPreferences _user = await SharedPreferences.getInstance();
+                          // _user.setString('email', emailController.text);
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {return BottomNavBar();}));
                         }
                       },
