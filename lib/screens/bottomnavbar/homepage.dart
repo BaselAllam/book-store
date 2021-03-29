@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bookapp/widgets/bookitem.dart';
 import 'package:bookapp/screens/result.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:bookapp/models/books/bookcontroller.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -60,49 +62,53 @@ Map<int, List> bookData = {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        title: Text(
-          'My Book',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Colors.black, size: 25.0),
-        elevation: 0.0,
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.search,
+    return ScopedModelDescendant(
+      builder: (context, child, BookController books){
+        return Scaffold(
+        backgroundColor: Colors.grey[50],
+        appBar: AppBar(
+          title: Text(
+            'My Book',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold
             ),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) {return Result();}));
-            },
           ),
-        ],
-      ),
-      body: Container(
-        margin: EdgeInsets.all(10.0),
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          children: [
-            title('Popular'),
-            Container(
-              height: MediaQuery.of(context).size.height/2.1,
-              child: scrollItem(popularBookData)
-            ),
-            title('Bestsellers'),
-            Container(
-              height: MediaQuery.of(context).size.height/2.1,
-              child: scrollItem(bookData),
+          backgroundColor: Colors.transparent,
+          iconTheme: IconThemeData(color: Colors.black, size: 25.0),
+          elevation: 0.0,
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.search,
+              ),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {return Result(books);}));
+              },
             ),
           ],
         ),
-      ),
+        body: Container(
+          margin: EdgeInsets.all(10.0),
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            children: [
+              title('Popular'),
+              Container(
+                height: MediaQuery.of(context).size.height/2.1,
+                child: scrollItem(popularBookData)
+              ),
+              title('Bestsellers'),
+              Container(
+                height: MediaQuery.of(context).size.height/2.1,
+                child: scrollItem(bookData),
+              ),
+            ],
+          ),
+        ),
+      );
+      }
     );
   }
   title(String title) {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:bookapp/models/books/bookcontroller.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 
 class AddBook extends StatefulWidget {
@@ -106,22 +108,31 @@ File image;
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Builder(
-                      builder: (BuildContext context){
-                        return FlatButton(
-                          child: Text(
-                            'Add Book',
-                            style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.normal),
-                          ),
-                          color: Colors.black,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                          onPressed: () async {
-                            if(!_formKey.currentState.validate()){
-                              Scaffold.of(context).showSnackBar(snack('Field Required!'));
-                            }else{
-                              Scaffold.of(context).showSnackBar(snack('Book Added Sucesfully'));
-                            }
-                          },
+                    child: ScopedModelDescendant(
+                      builder: (context, child, BookController books){
+                        return Builder(
+                          builder: (BuildContext context){
+                            return FlatButton(
+                              child: books.isAddBookLoading == true ? Center(child: CircularProgressIndicator()) : Text(
+                                'Add Book',
+                                style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.normal),
+                              ),
+                              color: Colors.black,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                              onPressed: () async {
+                                if(!_formKey.currentState.validate()){
+                                  Scaffold.of(context).showSnackBar(snack('Field Required!'));
+                                }else{
+                                  bool _valid = await books.addBook(bookNameController.text, double.parse(bookPriceController.text), 'https://i.pinimg.com/474x/8e/b9/63/8eb963b5794dd3f9aeb7cf19a59e659f.jpg');
+                                  if(_valid == true){
+                                    Scaffold.of(context).showSnackBar(snack('Book Added Sucesfully'));
+                                  }else{
+                                    Scaffold.of(context).showSnackBar(snack('Try Again'));
+                                  }
+                                }
+                              },
+                            );
+                          }
                         );
                       }
                     ),
