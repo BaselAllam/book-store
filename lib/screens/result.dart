@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bookapp/widgets/bookitem.dart';
 import 'package:bookapp/models/books/bookcontroller.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:bookapp/responsive/responsivehomepage.dart';
 
 
 class Result extends StatefulWidget {
@@ -26,6 +27,7 @@ String selectedChoice = '';
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -89,7 +91,7 @@ String selectedChoice = '';
               return GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 0.53
+                  childAspectRatio: responsiveResultItem(screenHeight)
                 ),
                 scrollDirection: Axis.vertical,
                 itemCount: books.allBooks.length,

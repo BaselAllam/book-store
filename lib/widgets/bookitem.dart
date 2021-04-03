@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bookapp/models/books/bookcontroller.dart';
 import 'package:scoped_model/scoped_model.dart';
-
+import 'package:bookapp/responsive/responsivehomepage.dart';
 
 
 class BookItem extends StatefulWidget {
@@ -25,11 +25,13 @@ bool shopping = false;
 
   @override
   Widget build(BuildContext context) {
+    double screenHegith = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return ScopedModelDescendant(
       builder: (context, child, BookController books){
         return Container(
           margin: EdgeInsets.all(15.0),
-          width: MediaQuery.of(context).size.width/2.4,
+          width: responsiveHomeItemWidth(screenHegith, screenWidth),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20.0)

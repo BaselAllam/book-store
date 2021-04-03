@@ -3,6 +3,7 @@ import 'package:bookapp/widgets/bookitem.dart';
 import 'package:bookapp/screens/result.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:bookapp/models/books/bookcontroller.dart';
+import 'package:bookapp/responsive/responsivehomepage.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -62,6 +63,7 @@ Map<int, List> bookData = {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return ScopedModelDescendant(
       builder: (context, child, BookController books){
         return Scaffold(
@@ -96,12 +98,12 @@ Map<int, List> bookData = {
             children: [
               title('Popular'),
               Container(
-                height: MediaQuery.of(context).size.height/2.1,
+                height: responsiveHomeItem(screenHeight),
                 child: scrollItem(popularBookData)
               ),
               title('Bestsellers'),
               Container(
-                height: MediaQuery.of(context).size.height/2.1,
+                height: responsiveHomeItem(screenHeight),
                 child: scrollItem(bookData),
               ),
             ],
